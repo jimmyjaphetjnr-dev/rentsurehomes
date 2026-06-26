@@ -28,6 +28,30 @@ export default function MyProperties() {
     setProperties(data);
   }
 
+  async function deleteProperty(id) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this property?"
+    );
+
+    if (!confirmed) return;
+
+    const { error } = await supabase
+      .from("properties")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setProperties((current) =>
+      current.filter((property) => property.id !== id)
+    );
+
+    alert("Property deleted successfully!");
+  }
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">My Properties</h1>
@@ -53,9 +77,15 @@ export default function MyProperties() {
               {property.bathrooms} Bathroom(s)
             </p>
 
-            <Link to={`/property/${property.id}`}>
-              View Details
-            </Link>
+            <div className="flex gap-3 mt-3">
+              <Link to={`/property/${property.id}`}>
+                View
+              </Link>
+
+              <button onClick={() => deleteProperty(property.id)}>
+                Delete
+              </button>
+            </div>
           </div>
         ))
       )}
