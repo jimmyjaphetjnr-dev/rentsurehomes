@@ -67,16 +67,29 @@ export default function Dashboard() {
       ) : (
         <p className="text-gray-500">Loading...</p>
       )}
-<button onClick={() => navigate("/add-property")}>
-  Add Property
-</button>
+      
+      <div className="flex flex-col gap-3 mt-6">
+        <button
+          onClick={() => navigate("/add-property")}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Add Property
+        </button>
 
-      <button 
-        onClick={handleLogout}
-        className="px-4 py-2 bg-red-600 text-white font-medium rounded hover:bg-red-700 transition duration-200"
-      >
-        Logout
-      </button>
+        <button
+          onClick={() => navigate("/my-properties")}
+          className="px-4 py-2 bg-green-600 text-white rounded"
+        >
+          My Properties
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-red-600 text-white rounded"
+        >
+          Logout
+        </button>
+      </div>
     </div>
-  );
-}
+  ); 
+} 

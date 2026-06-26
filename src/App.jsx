@@ -10,28 +10,48 @@ import AddProperty from "./pages/AddProperty";
 import PropertyDetails from "./pages/PropertyDetails";
 import NotFound from "./pages/NotFound";
 
+import MyProperties from "./pages/MyProperties";
+ 
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* This route is now completely locked down! */}
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="/add-property" element={<AddProperty />} />
-          <Route path="/property/:id" element={<PropertyDetails />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+
+  <Route
+    path="/dashboard"
+    element={
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/add-property"
+    element={
+      <ProtectedRoute>
+        <AddProperty />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/my-properties"
+    element={
+      <ProtectedRoute>
+        <MyProperties />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route path="/property/:id" element={<PropertyDetails />} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
       </BrowserRouter>
     </AuthProvider>
   );
