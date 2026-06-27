@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 
 import MyProperties from "./pages/MyProperties";
  
+ import EditProperty from "./pages/EditProperty";
 
 function App() {
   return (
@@ -51,6 +52,15 @@ function App() {
 
   <Route path="/property/:id" element={<PropertyDetails />} />
   <Route path="*" element={<NotFound />} />
+  
+  <Route
+  path="/edit-property/:id"
+  element={
+    <ProtectedRoute>
+      <EditProperty />
+    </ProtectedRoute>
+  }
+/>
 </Routes>
       </BrowserRouter>
     </AuthProvider>

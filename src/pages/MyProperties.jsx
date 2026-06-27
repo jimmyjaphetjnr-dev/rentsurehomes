@@ -1,3 +1,4 @@
+import Button from "../components/ui/Button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
@@ -76,16 +77,28 @@ export default function MyProperties() {
               {property.bedrooms} Bedroom(s) •{" "}
               {property.bathrooms} Bathroom(s)
             </p>
+       <div className="flex gap-3 mt-3">
+  <Button
+    to={`/property/${property.id}`}
+    variant="primary"
+  >
+    View
+  </Button>
 
-            <div className="flex gap-3 mt-3">
-              <Link to={`/property/${property.id}`}>
-                View
-              </Link>
+  <Button
+    to={`/edit-property/${property.id}`}
+    variant="warning"
+  >
+    Edit
+  </Button> 
 
-              <button onClick={() => deleteProperty(property.id)}>
-                Delete
-              </button>
-            </div>
+  <Button
+    variant="danger"
+    onClick={() => deleteProperty(property.id)}
+  >
+    Delete
+  </Button>
+</div>
           </div>
         ))
       )}

@@ -1,3 +1,4 @@
+import Button from "../components/ui/Button";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext"; 
@@ -82,13 +83,13 @@ export default function Dashboard() {
         >
           My Properties
         </button>
-
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 bg-red-600 text-white rounded"
-        >
-          Logout
-        </button>
+        
+        <Button
+  variant="danger"
+  onClick={handleLogout}
+>
+  Logout
+</Button>
       </div>
     </div>
   ); 
