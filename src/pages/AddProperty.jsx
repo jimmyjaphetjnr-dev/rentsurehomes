@@ -1,3 +1,5 @@
+import PropertyForm from "../components/property/PropertyForm";
+import Button from "../components/ui/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
@@ -7,12 +9,13 @@ export default function AddProperty() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    bedrooms: 1,
-    bathrooms: 1,
+    bedrooms: "",
+    bathrooms: "",
     address: "",
     city: "",
   });
@@ -24,12 +27,14 @@ export default function AddProperty() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-console.log("Current User:", user);
+  setLoading(true);
 
-    try {
+  console.log("Current User:", user);
+
+  try {
       const { error } = await supabase
         .from("properties")
         .insert([
@@ -54,81 +59,25 @@ console.log("Current User:", user);
 
       navigate("/dashboard");
     } catch (err) {
-      alert(err.message);
-    }
+  alert(err.message);
+} finally {
+  setLoading(false);
+}
   };
 
   return (
-    <div>
-      <h1>Add Property</h1>
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">
+  Add Property
+</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Property Title"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <textarea
-          name="description"
-          placeholder="Description"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="number"
-          name="bedrooms"
-          placeholder="Bedrooms"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="number"
-          name="bathrooms"
-          placeholder="Bathrooms"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Create Property
-        </button>
-      </form>
+<PropertyForm
+  formData={formData}
+  handleChange={handleChange}
+  handleSubmit={handleSubmit}
+  loading={loading}
+  submitText="Create Property"
+/>
     </div>
   );
 }
